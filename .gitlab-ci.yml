@@ -1,0 +1,20 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+stages:
+  - build
+  - test
+  - release
+  - deploy
+      
+build:
+  stage: build
+  script:
+    - echo "This is a build step"
+
+test:
+  stage: test
+  script:
+    - echo "This is a test step"
