@@ -15,6 +15,9 @@ jobs:
           echo -e "\nexport PATH=\$PATH:/spotbugs-4.7.3/bin" >> ~/.bashrc
           source ~/.bashrc
           ls
+          cd spotbugs-4.7.3/
+          cd bin
+          
           chmod +x /spotbugs-4.7.3/bin/spotbugs
           apt update && apt install default-jdk -y
       - uses: actions/checkout@v2
