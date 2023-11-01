@@ -19,7 +19,7 @@ jobs:
           cd bin
           ls
           sudo chmod +x spotbugs
-          apt update && apt install default-jdk -y
+          sudo apt update && apt install default-jdk -y
       - uses: actions/checkout@v2
       - run: |
           spotbugs -xml -output spotbugs-output.xml .
