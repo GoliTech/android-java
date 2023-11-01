@@ -9,7 +9,7 @@ jobs:
   sast_spotbugs:
     runs-on: ubuntu-20.04                    # similar to "image" in GitLab
     steps:
-      - uses: actions/checkout@v2
+      
       - run: |
           wget https://github.com/spotbugs/spotbugs/releases/download/4.7.3/spotbugs-4.7.3.zip
           unzip spotbugs-4.7.3.zip
@@ -17,6 +17,8 @@ jobs:
           source ~/.bashrc
           chmod +x /spotbugs-4.7.3/bin/spotbugs
           apt update && apt install default-jdk -y
+      - uses: actions/checkout@v2
+      - run: |
           spotbugs -xml -output spotbugs-output.xml .
         continue-on-error: true             
       - uses: actions/upload-artifact@v2
