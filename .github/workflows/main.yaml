@@ -1,31 +1,32 @@
 name: Java                                  # workflow name
 
-on:
-  push:                                       
-    branches:                                 # similar to "only" in GitLab
-      - master
+
+on: [push]
 
 jobs:
-  sast_spotbugs:
-    runs-on: ubuntu-20.04                    # similar to "image" in GitLab
+  spotbugs:
+    name: SpotBugs Analysis
+    runs-on: ubuntu-latest
+
     steps:
-      - run: |
-          wget https://github.com/spotbugs/spotbugs/releases/download/4.7.3/spotbugs-4.7.3.zip
-          unzip spotbugs-4.7.3.zip
-          echo -e "\nexport PATH=\$PATH:/spotbugs-4.7.3/bin" >> ~/.bashrc
-          source ~/.bashrc
-          ls
-          cd spotbugs-4.7.3/
-          cd bin
-          ls
-          sudo chmod +x spotbugs
-          sudo apt update && apt install default-jdk -y
-      - uses: actions/checkout@v2
-      - run: |
-          spotbugs -xml -output spotbugs-output.xml .
-        continue-on-error: true             
-      - uses: actions/upload-artifact@v2
-        with:
-          name: spotBugs
-          path: spotbugs-output.xml
-        if: always()   
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK  # If Java is not already set up
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'  # Use the Java version compatible with your project
+
+    - name: Build with Gradle  # Adjust according to your build system
+      run: ./gradlew build  # Use the appropriate build command for your project
+
+    - name: Run SpotBugs
+      run: ./gradlew spotbugsMain  # Use the appropriate command to run SpotBugs
+      continue-on-error: true
+
+    - name: Upload SpotBugs results
+      uses: actions/upload-artifact@v2
+      with:
+        name: spotbugs-results
+        path: build/reports/spotbugs/main.xml  # Adjust the path based on your project's configuration
+      if: always()
