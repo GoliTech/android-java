@@ -9,12 +9,12 @@ jobs:
   sast_spotbugs:
     runs-on: ubuntu-20.04                    # similar to "image" in GitLab
     steps:
-      
       - run: |
           wget https://github.com/spotbugs/spotbugs/releases/download/4.7.3/spotbugs-4.7.3.zip
           unzip spotbugs-4.7.3.zip
           echo -e "\nexport PATH=\$PATH:/spotbugs-4.7.3/bin" >> ~/.bashrc
           source ~/.bashrc
+          ls
           chmod +x /spotbugs-4.7.3/bin/spotbugs
           apt update && apt install default-jdk -y
       - uses: actions/checkout@v2
