@@ -3,7 +3,7 @@ name: Java                                  # workflow name
 on:
   push:                                       
     branches:                                 # similar to "only" in GitLab
-      - main
+      - master
 
 jobs:
   sast_spotbugs:
