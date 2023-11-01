@@ -17,7 +17,7 @@ jobs:
           ls
           cd spotbugs-4.7.3/
           cd bin
-          
+          ls
           chmod +x /spotbugs-4.7.3/bin/spotbugs
           apt update && apt install default-jdk -y
       - uses: actions/checkout@v2
